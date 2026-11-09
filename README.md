@@ -1,58 +1,112 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Green Valley Villa: Villa Booking Website
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A business website for a villa / homestay, built with the **Laravel** framework for the internship assignment "Business Website Development Using Laravel Framework".
 
-## About Laravel
+Guests can look at rooms, send booking requests, write reviews and contact the villa. The villa owner (admin) can manage rooms, bookings and messages from a separate admin panel.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Public pages**
+- Home, Rooms, Room details, About and Contact pages
+- Booking request form with an automatic price estimate (nights x price per night)
+- Guest reviews with star ratings
+- Contact form with Google Map and FAQ
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**Customer account**
+- Register, login and logout
+- "My Dashboard" page to track booking requests (Pending, Approved, Rejected)
 
-## Learning Laravel
+**Admin panel** (admin users only)
+- Dashboard with totals, latest bookings and latest messages
+- Rooms: add, edit and delete
+- Bookings: approve or reject (a room cannot be approved twice for the same dates)
+- Messages: read, mark as read and delete
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Technologies
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Laravel (PHP), Blade templates
+- MariaDB database
+- Tailwind CSS and Vite
+- Laravel Breeze (starter kit used only for the login, register and logout system)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## Requirements
 
-## Agentic Development
+- PHP 8.2 or higher
+- Composer
+- Node.js and npm
+- MariaDB (or MySQL)
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## How to run the project
 
-```bash
-composer require laravel/boost --dev
+1. Download the project and open the folder in a terminal:
+   ```bash
+   git clone https://github.com/dulakshijayasundara08-blip/villa-booking.git
+   cd villa-booking
+   ```
 
-php artisan boost:install
-```
+2. Install the PHP and JavaScript packages:
+   ```bash
+   composer install
+   npm install
+   ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+3. Create the environment file and the app key:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-## Contributing
+4. Create an empty database named `villa_booking` in MariaDB:
+   ```sql
+   CREATE DATABASE villa_booking;
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. Open the `.env` file and write your own database username and password:
+   ```
+   DB_DATABASE=villa_booking
+   DB_USERNAME=root
+   DB_PASSWORD=your_password
+   ```
 
-## Code of Conduct
+6. Create the tables and add the sample data (admin user and 4 rooms):
+   ```bash
+   php artisan migrate --seed
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+7. Build the design files:
+   ```bash
+   npm run build
+   ```
 
-## Security Vulnerabilities
+8. Start the website:
+   ```bash
+   php artisan serve
+   ```
+   Open **http://127.0.0.1:8000** in the browser.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Admin login
 
-## License
+| Email | Password |
+|---|---|
+| admin@test.com | password123 |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+After login, the admin goes to the admin panel (`/admin`). Customers can create their own account on the Register page.
+
+## Project structure
+
+| Folder | What is inside |
+|---|---|
+| `app/Http/Controllers` | Controllers for the public pages and the customer account |
+| `app/Http/Controllers/Admin` | Controllers for the admin panel |
+| `app/Http/Middleware` | `EnsureUserIsAdmin` (only admins can open admin pages) |
+| `app/Models` | Room, Booking, Review, ContactMessage, User |
+| `database/migrations` | Table definitions |
+| `database/seeders` | Admin user and sample rooms |
+| `resources/views` | Blade pages (public, auth, account, admin, layouts) |
+| `routes/web.php` | All website routes |
+| `public/images` | Photos used on the website |
+
+## Notes
+
+- Login, register and logout were created with Laravel Breeze, the official Laravel starter kit. All other features (rooms, bookings, reviews, contact messages, admin panel, customer dashboard, pages and design) were developed by me.
+- Change the demo admin password after the first login.
