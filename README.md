@@ -61,34 +61,21 @@ Guests can look at rooms, send booking requests, write reviews and contact the v
    CREATE DATABASE villa_booking;
    ```
 
-5. Open the `.env` file and write your own database username and password:
-   ```
-   DB_DATABASE=villa_booking
-   DB_USERNAME=root
-   DB_PASSWORD=your_password
-   ```
-
-6. Create the tables and add the sample data (admin user and 4 rooms):
+5. Create the tables and add the sample data (admin user and 4 rooms):
    ```bash
    php artisan migrate --seed
    ```
 
-7. Build the design files:
+6. Build the design files:
    ```bash
    npm run build
    ```
 
-8. Start the website:
+7. Start the website:
    ```bash
    php artisan serve
    ```
    Open **http://127.0.0.1:8000** in the browser.
-
-## Admin login
-
-| Email | Password |
-|---|---|
-| admin@test.com | password123 |
 
 After login, the admin goes to the admin panel (`/admin`). Customers can create their own account on the Register page.
 
